@@ -1,0 +1,45 @@
+{
+	"name": "soderlind/kjeks-scripting",
+	"description": "Consent-gate any enqueued script by handle for Kjeks.",
+	"type": "wordpress-plugin",
+	"keywords": [
+		"wordpress",
+		"wordpress-plugin",
+		"kjeks",
+		"cookie-consent",
+		"gdpr",
+		"privacy",
+		"scripts",
+		"consent"
+	],
+	"license": "GPL-2.0-or-later",
+	"require": {
+		"php": ">=8.3",
+		"soderlind/wordpress-github-updater": "^2.0"
+	},
+	"require-dev": {
+		"pestphp/pest": "^3.5",
+		"brain/monkey": "^2.6"
+	},
+	"autoload": {
+		"psr-4": {
+			"Soderlind\\KjeksScripting\\": "includes/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Soderlind\\KjeksScripting\\Tests\\": "tests/"
+		}
+	},
+	"scripts": {
+		"test": "pest"
+	},
+	"config": {
+		"allow-plugins": {
+			"pestphp/pest-plugin": true
+		},
+		"sort-packages": true
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true
+}
