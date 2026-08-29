@@ -3,7 +3,7 @@
  * Plugin Name:       Kjeks Scripting
  * Plugin URI:        https://github.com/soderlind/kjeks-scripting
  * Description:       Consent-gate any enqueued script by handle for Kjeks — assign registered script handles to a consent category and they stay inert until the visitor consents.
- * Version:           0.1.0
+ * Version:           0.1.1
  * Requires at least: 6.8
  * Requires PHP:      8.3
  * Requires Plugins:  kjeks
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KJEKS_SCRIPTING_VERSION', '0.1.0' );
+define( 'KJEKS_SCRIPTING_VERSION', '0.1.1' );
 define( 'KJEKS_SCRIPTING_FILE', __FILE__ );
 define( 'KJEKS_SCRIPTING_DIR', plugin_dir_path( __FILE__ ) );
 define( 'KJEKS_SCRIPTING_URL', plugin_dir_url( __FILE__ ) );

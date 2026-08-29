@@ -62,7 +62,7 @@ final class Settings extends SettingsPage {
 			<?php esc_html_e( 'Assign an enqueued script handle to a consent category. The script stays inert until the visitor consents to that category. Leave a row blank to ignore it.', 'kjeks-scripting' ); ?>
 		</p>
 		<?php $this->render_handle_datalist(); ?>
-		<table class="form-table" role="presentation">
+		<table class="form-table" role="presentation" id="kjeks-scripting-rows">
 			<tbody>
 				<?php
 				$row = 0;
@@ -75,6 +75,7 @@ final class Settings extends SettingsPage {
 				?>
 			</tbody>
 		</table>
+		<?php $this->render_clear_script(); ?>
 		<?php
 	}
 
@@ -87,24 +88,65 @@ final class Settings extends SettingsPage {
 				<label for="<?php echo esc_attr( $handle_id ); ?>"><?php esc_html_e( 'Script handle', 'kjeks-scripting' ); ?></label>
 			</th>
 			<td>
-				<input
-					type="text"
-					class="regular-text"
-					list="kjeks-scripting-handles"
-					id="<?php echo esc_attr( $handle_id ); ?>"
-					name="<?php echo esc_attr( $this->field_name( $prefix, 'handle' ) . '[]' ); ?>"
-					value="<?php echo esc_attr( $handle ); ?>"
-				/>
-				<?php
-				Categories::render_select(
-					$this->field_name( $prefix, 'category' ) . '[]',
-					$cat_id,
-					$category
-				);
-				?>
+				<span class="kjeks-scripting-row" style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;">
+					<input
+						type="text"
+						class="regular-text"
+						list="kjeks-scripting-handles"
+						id="<?php echo esc_attr( $handle_id ); ?>"
+						name="<?php echo esc_attr( $this->field_name( $prefix, 'handle' ) . '[]' ); ?>"
+						value="<?php echo esc_attr( $handle ); ?>"
+					/>
+					<?php
+					Categories::render_select(
+						$this->field_name( $prefix, 'category' ) . '[]',
+						$cat_id,
+						$category
+					);
+					?>
+					<button
+						type="button"
+						class="button button-secondary kjeks-scripting-clear"
+						data-handle="<?php echo esc_attr( $handle_id ); ?>"
+						data-category="<?php echo esc_attr( $cat_id ); ?>"
+					><?php esc_html_e( 'Clear', 'kjeks-scripting' ); ?></button>
+				</span>
 			</td>
 		</tr>
 		<?php
+	}
+
+	/**
+	 * Prints the delegated click handler that clears a single row's inputs.
+	 */
+	private function render_clear_script(): void {
+		$script = <<<'JS'
+		( function () {
+			var table = document.getElementById( 'kjeks-scripting-rows' );
+			if ( ! table ) {
+				return;
+			}
+			table.addEventListener( 'click', function ( event ) {
+				var button = event.target.closest( '.kjeks-scripting-clear' );
+				if ( ! button ) {
+					return;
+				}
+				var handle = document.getElementById( button.dataset.handle );
+				var category = document.getElementById( button.dataset.category );
+				if ( handle ) {
+					handle.value = '';
+				}
+				if ( category ) {
+					category.value = 'marketing';
+				}
+				if ( handle ) {
+					handle.focus();
+				}
+			} );
+		}() );
+		JS;
+
+		wp_print_inline_script_tag( $script );
 	}
 
 	private function render_handle_datalist(): void {
