@@ -4,7 +4,7 @@ Tags: consent, cookies, gdpr, privacy, scripts
 Requires at least: 6.8
 Tested up to: 6.8
 Requires PHP: 8.3
-Stable tag: 0.1.1
+Stable tag: 0.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,9 @@ source and look at the id attribute of the script tag; WordPress appends "-js",
 so id="google-analytics-js" means the handle is "google-analytics".
 
 == Changelog ==
+
+= 0.2.0 =
+* Show the scripting settings as a "Scripting" tab on the core Kjeks "Cookie Consent" screen instead of a separate submenu.
 
 = 0.1.1 =
 * Add a Clear button per handle row to reset a mapping, and align the handle, category, and button controls on one row.
