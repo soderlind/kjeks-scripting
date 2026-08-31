@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace Soderlind\KjeksScripting;
 
 use Soderlind\Kjeks\AddonKit\Categories;
-use Soderlind\Kjeks\AddonKit\SettingsPage;
+use Soderlind\Kjeks\AddonKit\AbstractFormTab;
 
 /**
- * Network Admin (Multisite) or Settings (single site) screen where an
- * administrator maps registered script handles to a consent category.
+ * A "Scripting" tab on the core Cookie Consent screen where an administrator
+ * maps registered script handles to a consent category.
  */
-final class Settings extends SettingsPage {
+final class Settings extends AbstractFormTab {
 
 	private const BLANK_ROWS = 3;
 
@@ -24,16 +24,16 @@ final class Settings extends SettingsPage {
 		return 'kjeks_scripting';
 	}
 
-	protected function menu_slug(): string {
-		return 'kjeks-scripting';
+	protected function get_tab_slug(): string {
+		return 'scripting';
 	}
 
-	protected function page_title(): string {
-		return __( 'Kjeks Scripting', 'kjeks-scripting' );
-	}
-
-	protected function menu_title(): string {
+	protected function get_tab_label(): string {
 		return __( 'Scripting', 'kjeks-scripting' );
+	}
+
+	protected function get_tab_intro(): string {
+		return __( 'Assign an enqueued script handle to a consent category. The script stays inert until the visitor consents to that category. Leave a row blank to ignore it.', 'kjeks-scripting' );
 	}
 
 	/**
@@ -58,9 +58,6 @@ final class Settings extends SettingsPage {
 	protected function render_fields( string $prefix, array $config ): void {
 		$handles = ScriptRules::handles( $config );
 		?>
-		<p class="description">
-			<?php esc_html_e( 'Assign an enqueued script handle to a consent category. The script stays inert until the visitor consents to that category. Leave a row blank to ignore it.', 'kjeks-scripting' ); ?>
-		</p>
 		<?php $this->render_handle_datalist(); ?>
 		<table class="form-table" role="presentation" id="kjeks-scripting-rows">
 			<tbody>
